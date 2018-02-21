@@ -10,3 +10,4 @@ trait Context {
     implicit val executionContext: ExecutionContext = system.dispatcher
     implicit val materializer: Materializer = ActorMaterializer()
 }
+
