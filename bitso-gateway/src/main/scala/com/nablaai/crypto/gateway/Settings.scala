@@ -10,11 +10,23 @@ object Settings {
 
     private val bitso: Config = app.getConfig("bitso")
     val ws: String = bitso.getString("ws")
-    val subscription_order: String = bitso.getString("subscription_order")
-    val subscription_trades: String = bitso.getString("subscription_trades")
-    val subscription_diff_orders: String = bitso.getString("subscription_diff_orders")
+    val subscriptionOrdersBtcMxn: String = bitso.getString("subscription_order_btc_mxn")
+    val subscriptionTradesBtcMxn: String = bitso.getString("subscription_trades_btc_mxn")
+    val subscriptionDiffOrdersBtcMxn: String = bitso.getString("subscription_diff_orders_btc_mxn")
 
   }
 
+  object Kafka {
+    private val kafka: Config = app.getConfig("kafka")
+    val boostrapServer: String = kafka.getString("bootstrap_server")
+    val stringSerializer: String = kafka.getString("string_serializer")
+
+    object Topics {
+      private val topics: Config = kafka.getConfig("topics")
+      val bitcoinBitsoTrades: String = topics.getString("bitcoin_bitso_trades")
+      val bitcoinBitsoOrders: String = topics.getString("bitcoin_bitso_orders")
+      val bitcoinBistoDiffOrders: String = topics.getString("bitcoin_bitso_diff_orders")
+    }
+  }
 }
 
