@@ -1,18 +1,19 @@
 application = {
   bitso = {
     ws = "ws://ws.bitso.com",
-    subscription_order = "{ \"action\": \"subscribe\", \"book\": \"btc_mxn\", \"type\": \"orders\" }",
-    subscription_trades = "{ \"action\": \"subscribe\", \"book\": \"btc_mxn\", \"type\": \"trades\" }",
-    subscription_diff_orders = "{ \"action\": \"subscribe\", \"book\": \"btc_mxn\", \"type\": \"diff-orders\" }"
+    subscription_order_btc_mxn = "{ \"action\": \"subscribe\", \"book\": \"btc_mxn\", \"type\": \"orders\" }",
+    subscription_trades_btc_mxn = "{ \"action\": \"subscribe\", \"book\": \"btc_mxn\", \"type\": \"trades\" }",
+    subscription_diff_orders_btc_mxn = "{ \"action\": \"subscribe\", \"book\": \"btc_mxn\", \"type\": \"diff-orders\" }"
   },
-  google_cloud_pubsub = {
-    project_id = "",
+  kafka = {
+    bootstrap_server = "localhost:9092",
+    string_serializer = "org.apache.kafka.common.serialization.StringSerializer",
     topics = {
-      bitcoin_trades_bitso = "bitcoin_bitso_trades",
-      bitcoin_order_bitso = "bitcoin_order_trades",
-      bitcoin_diff_orders_bitso = "bitcoin_diff_orders_trades"
+      bitcoin_bitso_trades = "bitcoin_bitso_trades",
+      bitcoin_bitso_orders = "bitcoin_bitso_orders",
+      bitcoin_bitso_diff_orders = "bitcoin_bitso_diff_orders"
     }
-
   }
 }
+
 
