@@ -12,6 +12,8 @@ lazy val root = (project in file(".")).
       "com.typesafe.akka" %% "akka-actor" % "2.5.9",
       "com.typesafe.akka" %% "akka-stream" % "2.5.9",
       "com.typesafe.akka" %% "akka-http" % "10.0.11",
+      "org.apache.kafka" %% "kafka" % "0.8.0",
+      "ch.qos.logback" % "logback-classic" % "1.1.3" % Runtime,
       "com.typesafe" % "config" % "1.3.1",
       scalaTest % Test
     )
