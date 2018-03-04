@@ -9,9 +9,7 @@ import java.util.Properties
 
 case class KafkaServiceConfig(bootStrapServers: String, keySerializer: String, valueSerializer: String)
 
-class KafkaService(config: KafkaServiceConfig) {
-
-  KafkaService.setConfiguration(config)
+class KafkaService() {
 
   def publishSink[T](key: String, topic: String): Sink[T, Future[Done]] = {
     Sink.foreach[T](element => {
@@ -28,26 +26,23 @@ class KafkaService(config: KafkaServiceConfig) {
 
 object KafkaService {
 
-  private var producer: KafkaProducer[String, String] = _
-  private var configuration: KafkaServiceConfig = _
+  private val configuration: KafkaServiceConfig =
+    defineSerializers(Settings.Kafka.stringSerializer, Settings.Kafka.stringSerializer)
 
-  def setConfiguration(config: KafkaServiceConfig): Unit = {
-    this.configuration = config
-    this.producer = null
+  private val properties: Properties = {
+    val props = new Properties()
+    props.put("bootstrap.servers", configuration.bootStrapServers)
+    props.put("key.serializer", configuration.keySerializer)
+    props.put("value.serializer", configuration.valueSerializer)
+    props
   }
 
-  def getProducer: KafkaProducer[String, String] = {
-    if (this.configuration == null)
-      throw new Exception("Set Configuration Required")
+  private val producer: KafkaProducer[String, String] = new KafkaProducer[String, String](properties)
 
-    if (this.producer == null){
-      val props = new Properties()
-      props.put("bootstrap.servers", configuration.bootStrapServers)
-      props.put("key.serializer", configuration.keySerializer)
-      props.put("value.serializer", configuration.valueSerializer)
-      this.producer = new KafkaProducer[String, String](props)
-    }
-    this.producer
+  def defineSerializers(key: String, value: String): KafkaServiceConfig = {
+    KafkaServiceConfig(Settings.Kafka.boostrapServer, key, value)
   }
+
+  def getProducer: KafkaProducer[String, String] = producer
 }
 

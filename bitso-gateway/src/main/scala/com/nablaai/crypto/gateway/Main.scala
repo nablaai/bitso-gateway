@@ -5,7 +5,7 @@ import akka.http.scaladsl.Http
 import akka.stream.scaladsl.{Flow, Keep, Sink, Source}
 import akka.http.scaladsl.model.ws.{Message, TextMessage, WebSocketRequest}
 
-import com.nablaai.util.kafka.{KafkaService, KafkaServiceConfig}
+import com.nablaai.util.kafka.KafkaService
 
 import scala.concurrent.{Future, Promise}
 
@@ -13,10 +13,8 @@ object Main extends Context {
 
   def main(args: Array[String]): Unit = {
 
-    val kafkaServiceConfig: KafkaServiceConfig =
-      KafkaServiceConfig(Settings.Kafka.boostrapServer, Settings.Kafka.stringSerializer, Settings.Kafka.stringSerializer)
 
-    val kafkaService: KafkaService = new KafkaService(kafkaServiceConfig)
+    val kafkaService: KafkaService = new KafkaService()
 
     val bitsoBitcoinSource: Source[Message, Promise[Option[Message]]] = Source(List(
       TextMessage(Settings.Bitso.subscriptionTradesBtcMxn),
